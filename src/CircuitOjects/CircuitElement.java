@@ -21,7 +21,14 @@ public class CircuitElement {
         this.value = value;
     }
 
-    protected double StringToDoubleConverter(String v) {
+    /**
+     * This method is only going to be used by one of the constructor that accepts value of the circuit component as String.
+     * This method converts value passed in as String to Double type.
+     *
+     * @param v value in String format
+     * @return  Returns value in Double if the String value is either numeric or follows the format of numeric value followed by a valid SI unit prefix.
+     */
+    private double StringToDoubleConverter(String v) {
         if(isNumeric(v)) {
             return Double.valueOf(v);
         }

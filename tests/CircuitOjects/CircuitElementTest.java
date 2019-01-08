@@ -15,7 +15,7 @@ public class CircuitElementTest {
 
     @Test
     public void stringToDoubleConverter_InvalidUnit() {
-        CircuitElement element = new CircuitElement("v1", "1", "2", "12j");
+        CircuitElement element = new CircuitElement("v1", "1", "2", "12h");
         assertEquals(Double.NaN, element.getValue(), 0);
     }
 
