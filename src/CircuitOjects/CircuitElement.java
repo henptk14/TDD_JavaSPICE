@@ -5,17 +5,40 @@ public class CircuitElement {
     protected String positiveNode, negativeNode;
     protected double value;
 
+    /**
+     * This is the base constructor used by all other public constructors
+     *
+     * @param name              name of the element.
+     * @param positiveNode      name of the positive node
+     * @param negativeNode      name of the negative node
+     */
     private CircuitElement (String name, String positiveNode, String negativeNode) {
         this.name = name;
         this.positiveNode = positiveNode;
         this.negativeNode = negativeNode;
     }
 
+    /**
+     * This constructor accepts value as String.
+     *
+     * @param name          name of the element.
+     * @param positiveNode  name of the positive node.
+     * @param negativeNode  name of the negative node.
+     * @param value         value of the element as String with or without metric prefixes
+     */
     public CircuitElement (String name, String positiveNode, String negativeNode, String value) {
         this(name, positiveNode, negativeNode);
         this.value = StringToDoubleConverter(value);
     }
 
+    /**
+     * This constructor accepts value as Double.
+     *
+     * @param name          name of the element.
+     * @param positiveNode  name of the positive node.
+     * @param negativeNode  name of the negative node.
+     * @param value         value of the element as Double.
+     */
     public CircuitElement (String name, String positiveNode, String negativeNode, double value) {
         this(name, positiveNode, negativeNode);
         this.value = value;

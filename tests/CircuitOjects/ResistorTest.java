@@ -41,9 +41,9 @@ public class ResistorTest {
 
     @Test
     public void stamp_positiveGround_negativeOutOfBound() {
-        CircuitElement res = new Resistor("r1", "0", "5", "2k");
+        CircuitElement res = new Resistor("r1", "0", "4", "2k");
         double[][] A = new double[4][4];
-        boolean stamped = ((Resistor) res).stamp(-1, 5, res.getValue(), A);
+        boolean stamped = ((Resistor) res).stamp(-1, 4, res.getValue(), A);
         assertFalse(stamped);
     }
 

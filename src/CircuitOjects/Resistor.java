@@ -17,8 +17,8 @@ public class Resistor extends CircuitElement {
      *
      *  In cases of when positive node or negative node is connected to ground, the entire row or column will not be stamped.
      *
-     * @param positiveNode  position of positve node.
-     * @param negativeNode  position of negative node.
+     * @param positiveNode  position of positve node in the List.
+     * @param negativeNode  position of negative node in the List.
      * @param value         resistance value.
      * @param matrixA       the left hand matrix A to be stamped on.
      * @return              Returns true if it is stamped successfully. Otherwise, returns false.
@@ -47,14 +47,14 @@ public class Resistor extends CircuitElement {
     }
 
     /**
-     * This is a private class that is used to check if a particular node is within the size of the matrix.
+     * This is a private method that is used to check if a particular node is within the size of the matrix.
      * This is to prevent ArrayOutOfBound exceptions.
      * @param bound is the node to be checked.
      * @param A is the matrix to be compared against.
      * @return Returns true if bound is within the size of matrix. Otherwise, returns false.
      */
     private boolean withinBound(int bound, double[][] A) {
-        if(bound >= 0 && bound <= A.length && bound <= A[0].length) {
+        if(bound >= 0 && bound <= A.length - 1 && bound <= A[0].length - 1) {
             return true;
         }
         return false;
