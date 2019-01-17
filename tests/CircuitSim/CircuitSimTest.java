@@ -47,4 +47,11 @@ public class CircuitSimTest {
         assertEquals(0, c.getVoltageSourceList().size());
         assertEquals(2, c.getNodeList().size());
     }
+
+    @Test
+    public void addElement_invalidValue() {
+        boolean add1 = c.addElement(new Resistor("r1", "1", "2", "2h"));
+
+        assertFalse(add1);
+    }
 }

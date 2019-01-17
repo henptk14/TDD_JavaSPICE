@@ -19,7 +19,7 @@ public class CircuitElement {
     }
 
     /**
-     * This constructor accepts value as String.
+     * This constructor accepts value as String. Please check the value variable whenever you use this constructor.
      *
      * @param name          name of the element.
      * @param positiveNode  name of the positive node.

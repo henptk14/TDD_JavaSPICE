@@ -38,11 +38,18 @@ public class CircuitSim {
         logger = Logger.getLogger(this.getClass().getName());
     }
 
+    /**
+     * This method adds a CircuitElement to the list. Returns true if added successfully. Otherwise, returns false.
+     *
+     * @param element   CircuitElement to be added.
+     * @return          Returns true if added successfully. Otherwise, returns false.
+     */
     public boolean addElement(CircuitElement element) {
-        if (element == null) {
-            logger.log(Level.SEVERE, "CircuitSim addElement has null input.");
+        if (element == null || Double.isNaN(element.getValue())) {
+            logger.log(Level.INFO, "CircuitSim addElement has null input OR value is NaN because of invalid value String.");
             return false;
         }
+
         if (elementList.indexOf(element) == -1) {   // if it is a unique name, add to the list
             elementList.add(element);
             if (element instanceof IVS) {
@@ -55,6 +62,21 @@ public class CircuitSim {
                 nodeList.add(element.getNegativeNode());
             }
             return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * This method removes CircuitElement from the list. Returns true if removed successfully. Otherwise, returns false.
+     *
+     * @param element   CircuitElement to be removed.
+     * @return          Returns true if removed successfully. Otherwise, returns false.
+     */
+    public boolean removeElement(CircuitElement element) {
+        if (element == null || Double.isNaN(element.getValue())) {
+            logger.log(Level.INFO, "CircuitSim removeElement has null input OR invalid object");
+            return false;
         }
 
         return false;
