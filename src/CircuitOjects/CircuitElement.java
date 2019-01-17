@@ -126,6 +126,20 @@ public class CircuitElement {
         return true;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof CircuitElement)) {
+            return false;
+        }
+
+        CircuitElement c = (CircuitElement) obj;
+        return c.getName().compareTo(this.name) == 0;
+    }
+
     public String getName() {
         return name;
     }

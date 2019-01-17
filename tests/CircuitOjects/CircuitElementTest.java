@@ -30,4 +30,18 @@ public class CircuitElementTest {
         CircuitElement element = new CircuitElement("v1", "1", "2", "12m");
         assertEquals(0.012, element.getValue(), 0);
     }
+
+    @Test
+    public void equals_equal() {
+        CircuitElement e1 = new IVS("v1", "1", "2", 12);
+        CircuitElement e2 = new Resistor("v1", "0", "3", 12);
+        assertTrue(e1.equals(e2));
+    }
+
+    @Test
+    public void equals_notEqual() {
+        CircuitElement e1 = new IVS("v1", "1", "2", 12);
+        CircuitElement e2 = new IVS("v2", "1", "2", 12);
+        assertFalse(e1.equals(e2));
+    }
 }

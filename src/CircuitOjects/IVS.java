@@ -9,12 +9,27 @@ public class IVS extends CircuitElement {
     private boolean stamped;
     private Logger ivsLogger;
 
+    /**
+     * This constructor accepts value as String with or without metric prefix.
+     *
+     * @param name          name of independent voltage source.
+     * @param positiveNode  name of positive node.
+     * @param negativeNode  name of negative node.
+     * @param value         value with or without metric prefix.
+     */
     public IVS (String name, String positiveNode, String negativeNode, String value) {
         super(name, positiveNode, negativeNode, value);
         stamped = false;
         ivsLogger = Logger.getLogger(IVS.class.getName());
     }
 
+    /**
+     * This constructor accepts value as type double. So no metric prefix.
+     * @param name          name of independent voltage source.
+     * @param positiveNode  name of positive node.
+     * @param negativeNode  name of negative node.
+     * @param value         value of voltage in volt.
+     */
     public IVS (String name, String positiveNode, String negativeNode, double value){
         super(name, positiveNode, negativeNode, value);
         stamped = false;

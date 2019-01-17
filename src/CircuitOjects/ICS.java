@@ -7,12 +7,28 @@ public class ICS extends CircuitElement {
     private Logger icsLogger;
     private boolean stamped;
 
+    /**
+     * This constructor accepts value as String with or without metric prefix.
+     *
+     * @param name          name of independent current source.
+     * @param positiveNode  name of positive node.
+     * @param negativeNode  name of negative node.
+     * @param value         value of current source with or without metric prefix.
+     */
     public ICS (String name, String positiveNode, String negativeNode, String value) {
         super(name, positiveNode, negativeNode, value);
         stamped = false;
         icsLogger = Logger.getLogger(ICS.class.getName());
     }
 
+    /**
+     * This constructor accepts value as type double. So no metric prefix.
+     *
+     * @param name          name of independent current source.
+     * @param positiveNode  name of positive node.
+     * @param negativeNode  name of negative node.
+     * @param value         value of current in ampere.
+     */
     public ICS(String name, String positiveNode, String negativeNode, double value) {
         super(name, positiveNode, negativeNode, value);
         stamped = false;
