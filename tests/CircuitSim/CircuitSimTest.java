@@ -54,4 +54,37 @@ public class CircuitSimTest {
 
         assertFalse(add1);
     }
+
+    @Test
+    public void removeElement_invalidIndex() {
+        c.addElement(new IVS("v1", "1", "0", 12));
+        c.addElement(new Resistor("r2", "2", "3", "15k"));
+        c.addElement(new Resistor("r3", "2", "3", "20k"));
+        c.addElement(new Resistor("r4", "3", "0", 500));
+        c.addElement(new ICS("a1", "3", "0", 12));
+
+        assertFalse(c.removeElement(-1));
+        assertFalse(c.removeElement(5));
+
+        assertEquals(5, c.getElementList().size());
+        assertEquals(1, c.getVoltageSourceList().size());
+        assertEquals(3, c.getNodeList().size());
+    }
+
+    @Test
+    public void removeElement_valid() {
+        c.addElement(new IVS("v1", "1", "0", 12));
+        c.addElement(new Resistor("r2", "2", "3", "15k"));
+        c.addElement(new Resistor("r3", "2", "3", "20k"));
+        c.addElement(new Resistor("r4", "3", "0", 500));
+        c.addElement(new ICS("a1", "3", "0", 12));
+
+        assertTrue(c.removeElement(0));
+        assertTrue(c.removeElement(3));
+        assertTrue(c.removeElement(1));
+
+        assertEquals(2, c.getElementList().size());
+        assertEquals(0, c.getVoltageSourceList().size());
+        assertEquals(2, c.getNodeList().size());
+    }
 }
