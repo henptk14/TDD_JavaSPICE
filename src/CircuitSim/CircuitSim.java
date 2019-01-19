@@ -123,6 +123,50 @@ public class CircuitSim {
         return true;
     }
 
+    /**
+     * This private method stamps all elements to the matrix and vector.
+     * @param matrixA   Left hand side matrix A to be stamped.
+     * @param b         Right hand side vector B to be stamped.
+     * @return          Returns true if stamped successfully. Otherwise, returns false.
+     */
+    private boolean stamp(double[][] matrixA, double[] b, List<String> nodes) {
+        if (nodes.size() < 1) {
+            logger.log(Level.INFO, "stamp method from CircuitSim returned false because node list less than 1.");
+            return false;
+        }
+
+        if (matrixA.length < 1 || matrixA.length != matrixA[0].length || matrixA.length != b.length) {
+            logger.log(Level.INFO, "stamp method from CircuitSim returned false because matrix size is invalid.");
+            return false;
+        }
+
+        for (CircuitElement c : elementList) {
+            if (c instanceof IVS) {
+                int pn = nodes.indexOf(c.getPositiveNode());
+                int nn = nodes.indexOf(c.getNegativeNode());
+                int k = nodes.size() + voltageSourceList.indexOf(c);
+                if (!((IVS) c).stamp(pn, nn, k, c.getValue(), matrixA, b)) {
+                    return false;
+                }
+            }
+            if (c instanceof ICS) {
+                int pn = nodes.indexOf(c.getPositiveNode());
+                int nn = nodes.indexOf(c.getNegativeNode());
+                if (!((ICS) c).stamp(pn, nn, c.getValue(), b)) {
+                    return false;
+                }
+            }
+            if (c instanceof Resistor) {
+                int pn = nodes.indexOf(c.getPositiveNode());
+                int nn = nodes.indexOf(c.getNegativeNode());
+                if (!((Resistor) c).stamp(pn, nn, c.getValue(), matrixA)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public List<CircuitElement> getElementList() {
         return elementList;
     }

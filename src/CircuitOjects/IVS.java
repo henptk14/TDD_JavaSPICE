@@ -63,6 +63,11 @@ public class IVS extends CircuitElement {
             return false;
         }
 
+        if (branchK <= positiveNode || branchK <= negativeNode) {
+            ivsLogger.log(Level.INFO, name + "'s stamp method has issues. It's either because branchK is less tahn or equal to positive or negative node.");
+            return false;
+        }
+
         if(positiveNode == -1 && withinBound(negativeNode, matrixA) && withinBound(branchK, matrixA) && withinBound(branchK, vectorB)) { // if N+ is connected to ground
             matrixA[negativeNode][branchK] -= 1;
             matrixA[branchK][negativeNode] -= 1;
