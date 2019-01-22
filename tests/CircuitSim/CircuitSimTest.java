@@ -87,4 +87,9 @@ public class CircuitSimTest {
         assertEquals(0, c.getVoltageSourceList().size());
         assertEquals(2, c.getNodeList().size());
     }
+
+    @Test
+    public void stamp_valid() {
+        
+    }
 }

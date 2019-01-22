@@ -1,7 +1,5 @@
 package CircuitOjects;
 
-import sun.rmi.runtime.Log;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
