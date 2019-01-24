@@ -90,6 +90,50 @@ public class CircuitSimTest {
 
     @Test
     public void stamp_valid() {
-        
+        c.addElement(new IVS("v1", "3", "0", 12));
+        c.addElement(new Resistor("r2", "3", "1", 100));
+        c.addElement(new Resistor("r3", "1", "0", 1000));
+        c.addElement(new Resistor("r4", "1", "0", 500));
+
+        CircuitResult res = c.calculate();
+
+        assertEquals(4, c.getElementList().size());
+        assertEquals(2, c.getNodeList().size());
+        assertEquals(1, c.getVoltageSourceList().size());
+        assertNotNull(res);
+
+        assertEquals(3, res.getNodeVoltages().length);
+        for (int i = 0; i < res.getNodeVoltages().length; i++) {
+            System.out.print(res.getNodeVoltages()[i] + ", ");
+        }
+        System.out.println();
+        for (int i = 0; i < res.getNodes().size(); i++) {
+            System.out.print(res.getNodes().get(i) + ", ");
+        }
+    }
+
+    @Test
+    public void stamp_openCircuit() {
+        c.addElement(new IVS("v1", "3", "0", 12));
+        c.addElement(new Resistor("r2", "3", "1", 100));
+        c.addElement(new Resistor("r3", "1", "0", 1000));
+        c.addElement(new Resistor("r4", "1", "0", 500));
+        c.addElement(new Resistor("r5", "1", "2", 500));
+
+        CircuitResult res = c.calculate();
+
+        assertEquals(5, c.getElementList().size());
+        assertEquals(3, c.getNodeList().size());
+        assertEquals(1, c.getVoltageSourceList().size());
+
+        assertNotNull(res);
+
+        for (int i = 0; i < res.getNodeVoltages().length; i++) {
+            System.out.print(res.getNodeVoltages()[i] + ", ");
+        }
+        System.out.println();
+        for (int i = 0; i < res.getNodes().size(); i++) {
+            System.out.print(res.getNodes().get(i) + ", ");
+        }
     }
 }

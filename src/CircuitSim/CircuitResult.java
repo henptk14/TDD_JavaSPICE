@@ -13,6 +13,8 @@ public class CircuitResult {
         this.nodeVoltages = new double[nodeVoltages.length];
         for (int i = 0; i < nodeVoltages.length; i++) {
             this.nodeVoltages[i] = nodeVoltages[i];
+        }
+        for (int i = 0; i < nodes.size(); i++) {
             this.nodes.add(nodes.get(i));
         }
     }

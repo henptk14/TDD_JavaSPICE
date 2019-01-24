@@ -154,6 +154,7 @@ public class CircuitSim {
                 }
             }
         }
+        logger.log(Level.SEVERE, "calculate method from CircuitSim returned null. Unknown issue.");
         return null;
     }
 
