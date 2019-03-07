@@ -16,6 +16,7 @@ public class CircuitSim {
     private Logger logger;
     private List<CircuitElement> elementList;
     private List<CircuitElement> voltageSourceList;
+    private List<CircuitElement> currentSourceList;
     private HashMap<String, Integer> nodeList;
 
     /**
@@ -25,6 +26,7 @@ public class CircuitSim {
         elementList = new ArrayList<>();
         voltageSourceList = new ArrayList<>();
         nodeList = new HashMap<>();
+        currentSourceList = new ArrayList<>();
         logger = Logger.getLogger(this.getClass().getName());
     }
 
@@ -59,6 +61,10 @@ public class CircuitSim {
             if (element instanceof IVS) {
                 voltageSourceList.add(element);
             }
+            if (element instanceof ICS) {
+                currentSourceList.add(element);
+            }
+
             if (element.getPositiveNode().compareTo("0") != 0) {
                 if (nodeList.containsKey(element.getPositiveNode())) {
                     int i = nodeList.get(element.getPositiveNode()) + 1;
@@ -101,6 +107,12 @@ public class CircuitSim {
                 return false;
             }
         }
+        if (temp instanceof ICS) {
+            if (currentSourceList.remove(temp) == false) {
+                logger.log(Level.SEVERE, "removeElement in CircuitSim failed. Item mismatch between element and current source list.");
+                return false;
+            }
+        }
 
         if (nodeList.get(temp.getPositiveNode()) != null) {
             int i = nodeList.get(temp.getPositiveNode()) - 1;
@@ -128,12 +140,35 @@ public class CircuitSim {
 
 
     /**
+     * Calculates node voltages and branch current.
+     * @return  Return CircuitResult object if successful. Otherwise, returns null.
+     */
+    public CircuitResult calculate() {
+        if (elementList.size() > 1 && nodeList.size() > 1 && !(voltageSourceList.size() < 1 && currentSourceList.size() < 1)) {
+            List<String> nodes = new ArrayList<>(nodeList.keySet());
+            int size = nodes.size() + voltageSourceList.size();
+            double[][] matrixA = new double[size][size];
+            double[] vecB = new double[size];
+
+            if (stamp(matrixA, vecB, nodes)) {
+                double[] ans = LUOperation.solveLU(matrixA, vecB);
+                if (ans != null) {
+                    CircuitResult result = new CircuitResult(ans, nodes);
+                    return result;
+                }
+            }
+        }
+        logger.log(Level.SEVERE, "calculate method from CircuitSim returned null. Unknown issue.");
+        return null;
+    }
+
+    /**
      * This private method stamps all elements to the matrix and vector.
      * @param matrixA   Left hand side matrix A to be stamped.
      * @param b         Right hand side vector B to be stamped.
      * @return          Returns true if stamped successfully. Otherwise, returns false.
      */
-    private boolean stamp(double[][] matrixA, double[] b, List<String> nodes) {
+    public boolean stamp(double[][] matrixA, double[] b, List<String> nodes) {
         if (nodes.size() < 1) {
             logger.log(Level.INFO, "stamp method from CircuitSim returned false because node list less than 1.");
             return false;
