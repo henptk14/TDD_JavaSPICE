@@ -1,6 +1,5 @@
 package CircuitSim;
 
-import LUObject.*;
 import CircuitOjects.*;
 
 import java.util.ArrayList;
@@ -8,6 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+/**
+ *
+ */
 
 public class CircuitSim {
     private Logger logger;
@@ -122,6 +125,7 @@ public class CircuitSim {
         elementList.remove(index);
         return true;
     }
+
 
     /**
      * This private method stamps all elements to the matrix and vector.
