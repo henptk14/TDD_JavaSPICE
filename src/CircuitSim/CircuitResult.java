@@ -1,9 +1,5 @@
 package CircuitSim;
 
-<<<<<<< HEAD
-public class CircuitResult {
-    
-=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +38,4 @@ public class CircuitResult {
     public double[] getBranchCurrents() {
         return branchCurrents;
     }
->>>>>>> origin/master
 }

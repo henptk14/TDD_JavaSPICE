@@ -28,64 +28,79 @@ public class CircuitSimTest {
 
     @Test
     public void addElement_valid() {
-        boolean add1 = c.addElement(new IVS("v1", "1", "2", 12));
-        boolean add2 = c.addElement(new IVS("v2", "3", "0", "15k"));
+        boolean add1 = c.addElement(new IVS("v1", "1", "0", 20));
+        boolean add2 = c.addElement(new Resistor("r1", "1", "2", "1k"));
+        boolean add3 = c.addElement(new Resistor("r2", "2", "0", 2000));
+        boolean add4 = c.addElement(new Resistor("r3", "2", "3", "3k"));
+        boolean add5 = c.addElement(new ICS("a1", "3", "0", 1));
+
         assertTrue(add1);
-        assertEquals(2, c.getElementList().size());
-        assertEquals(2, c.getVoltageSourceList().size());
+        assertTrue(add2);
+        assertTrue(add3);
+        assertTrue(add4);
+        assertTrue(add5);
+
+        assertEquals(5, c.getElementList().size());
+        assertEquals(1, c.getVoltageSourceList().size());
+        assertEquals(1, c.getCurrentSourceList().size());
         assertEquals(3, c.getNodeList().size());
+        assertEquals(4, c.getGraph().getVertexCount());
+        assertEquals(5, c.getGraph().getEdgeCount());
     }
 
     @Test
     public void addElement_sameElement() {
-        boolean add1 = c.addElement(new Resistor("r1", "1", "2", 10));
-        boolean add2 = c.addElement(new ICS("r1", "2", "0", "13"));
+        boolean add1 = c.addElement(new IVS("v1", "1", "0", 12));
+        boolean add2 = c.addElement(new Resistor("r2", "1", "2", "1k"));
+        boolean add3 = c.addElement(new Resistor("r2", "2", "0", "5M"));
 
         assertTrue(add1);
-        assertFalse(add2);
-        assertEquals(1, c.getElementList().size());
-        assertEquals(0, c.getVoltageSourceList().size());
+        assertTrue(add2);
+        assertFalse(add3);
+
+        assertEquals(2, c.getElementList().size());
+        assertEquals(1, c.getVoltageSourceList().size());
+        assertEquals(0, c.getCurrentSourceList().size());
         assertEquals(2, c.getNodeList().size());
+        assertEquals(3, c.getGraph().getVertexCount());
+        assertEquals(2, c.getGraph().getEdgeCount());
     }
 
     @Test
     public void addElement_invalidValue() {
-        boolean add1 = c.addElement(new Resistor("r1", "1", "2", "2h"));
+        boolean add1 = c.addElement(new IVS("v1", "1", "0", "2o"));
 
         assertFalse(add1);
+        assertEquals(0, c.getElementList().size());
+        assertEquals(0, c.getVoltageSourceList().size());
+        assertEquals(0, c.getCurrentSourceList().size());
+        assertEquals(0, c.getNodeList().size());
+        assertEquals(0, c.getGraph().getVertexCount());
+        assertEquals(0, c.getGraph().getEdgeCount());
     }
 
     @Test
     public void removeElement_invalidIndex() {
-        c.addElement(new IVS("v1", "1", "0", 12));
-        c.addElement(new Resistor("r2", "2", "3", "15k"));
-        c.addElement(new Resistor("r3", "2", "3", "20k"));
-        c.addElement(new Resistor("r4", "3", "0", 500));
-        c.addElement(new ICS("a1", "3", "0", 12));
+        boolean add1 = c.addElement(new IVS("v1", "1", "0", "12"));
+        boolean add2 = c.addElement(new Resistor("r1", "1", "2", "1k"));
+        boolean add3 = c.addElement(new Resistor("r2", "2", "0", "200k"));
 
-        assertFalse(c.removeElement(-1));
-        assertFalse(c.removeElement(5));
+        assertTrue(add1);
+        assertTrue(add2);
+        assertTrue(add3);
 
-        assertEquals(5, c.getElementList().size());
+        boolean rm1 = c.removeElement(1);
+        boolean rm2 = c.removeElement(1);
+
+        assertTrue(rm1);
+        assertTrue(rm2);
+
+        assertEquals(1, c.getElementList().size());
         assertEquals(1, c.getVoltageSourceList().size());
-        assertEquals(3, c.getNodeList().size());
-    }
-
-    @Test
-    public void removeElement_valid() {
-        c.addElement(new IVS("v1", "1", "0", 12));
-        c.addElement(new Resistor("r2", "2", "3", "15k"));
-        c.addElement(new Resistor("r3", "2", "3", "20k"));
-        c.addElement(new Resistor("r4", "3", "0", 500));
-        c.addElement(new ICS("a1", "3", "0", 12));
-
-        assertTrue(c.removeElement(0));
-        assertTrue(c.removeElement(3));
-        assertTrue(c.removeElement(1));
-
-        assertEquals(2, c.getElementList().size());
-        assertEquals(0, c.getVoltageSourceList().size());
-        assertEquals(2, c.getNodeList().size());
+        assertEquals(0, c.getCurrentSourceList().size());
+        assertEquals(1, c.getNodeList().size());
+        assertEquals(2, c.getGraph().getVertexCount());
+        assertEquals(1, c.getGraph().getEdgeCount());
     }
 
     @Test

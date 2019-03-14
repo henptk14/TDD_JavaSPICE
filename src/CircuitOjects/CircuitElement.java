@@ -127,6 +127,20 @@ public class CircuitElement {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 7;
+        for (int i = 0; i < this.name.length(); i++) {
+            hash = hash * 31 + this.name.charAt(i);
+        }
+        return hash;
+    }
+
+    /**
+     * equals if both CircuitElement have same name
+     * @param obj   Circuit element to be compared
+     * @return  returns true if both have same name. Otherwise, returns false.
+     */
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -138,6 +152,11 @@ public class CircuitElement {
 
         CircuitElement c = (CircuitElement) obj;
         return c.getName().compareTo(this.name) == 0;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     public String getName() {
